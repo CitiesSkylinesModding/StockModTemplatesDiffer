@@ -1,5 +1,7 @@
 # Stock Mod Templates from Cities: Skylines II
 
+> Reference maintainer(s): @toverux
+
 This is a repo containing the two unpacked mod templates from the CS2 official modding tooclhain.
 
 The purpose of this repository is to track changes in templates and tag versions of the game for each change.
