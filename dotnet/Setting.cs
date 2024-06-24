@@ -47,6 +47,8 @@ namespace StockMod
         [SettingsUISection(kSection, kDropdownGroup)]
         public SomeEnum EnumDropdown { get; set; } = SomeEnum.Value1;
 
+
+
         public DropdownItem<int>[] GetIntDropdownItems()
         {
             var items = new List<DropdownItem<int>>();
@@ -87,7 +89,7 @@ namespace StockMod
         {
             return new Dictionary<string, string>
             {
-                { m_Setting.GetSettingsLocaleID(), "Mod settings sample" },
+                { m_Setting.GetSettingsLocaleID(), "StockMod" },
                 { m_Setting.GetOptionTabLocaleID(Setting.kSection), "Main" },
 
                 { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "Buttons" },
@@ -117,6 +119,7 @@ namespace StockMod
                 { m_Setting.GetEnumValueLocaleID(Setting.SomeEnum.Value1), "Value 1" },
                 { m_Setting.GetEnumValueLocaleID(Setting.SomeEnum.Value2), "Value 2" },
                 { m_Setting.GetEnumValueLocaleID(Setting.SomeEnum.Value3), "Value 3" },
+
             };
         }
 

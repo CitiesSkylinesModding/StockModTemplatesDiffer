@@ -2,7 +2,6 @@
 using Game;
 using Game.Modding;
 using Game.SceneFlow;
-using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
 
 namespace StockMod
@@ -22,6 +21,7 @@ namespace StockMod
             m_Setting = new Setting(this);
             m_Setting.RegisterInOptionsUI();
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(m_Setting));
+
 
             AssetDatabase.global.LoadSettings(nameof(StockMod), m_Setting, new Setting(this));
         }
