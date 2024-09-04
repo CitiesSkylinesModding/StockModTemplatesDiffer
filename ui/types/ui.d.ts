@@ -1,5 +1,5 @@
 declare module "cs2/ui" {
-  import { CSSProperties, HTMLAttributes, PropsWithChildren, ReactElement, ReactNode, Ref } from 'react';
+  import { CSSProperties, HTMLAttributes, PropsWithChildren, ReactElement, ReactNode, Ref, RefObject } from 'react';
   
   export interface RefReactElement<T = any, P = any> extends ReactElement<P> {
   	ref?: Ref<T>;
@@ -39,8 +39,9 @@ declare module "cs2/ui" {
   	direction?: BalloonDirection;
   	alignment?: BalloonAlignment;
   	children: RefReactElement;
+  	anchorElRef?: RefObject<HTMLElement>;
   }
-  export export const Tooltip: ({ tooltip, forceVisible, disabled, theme, direction, alignment, className, children }: PropsWithChildren<TooltipProps>) => JSX.Element;
+  export export const Tooltip: ({ tooltip, forceVisible, disabled, theme, direction, alignment, className, children, anchorElRef }: PropsWithChildren<TooltipProps>) => JSX.Element;
   export const FOCUS_DISABLED: unique symbol;
   export const FOCUS_AUTO: unique symbol;
   export type FocusKey = typeof FOCUS_DISABLED | typeof FOCUS_AUTO | UniqueFocusKey;
@@ -152,6 +153,7 @@ declare module "cs2/ui" {
   	"Move Vertical": Action1D;
   	"Switch Radio Station": Action1D;
   	"Scroll Vertical": Action1D;
+  	"Scroll Assets": Action1D;
   	"Select": Action;
   	"Purchase Dev Tree Node": Action;
   	"Select Chirp Sender": Action;

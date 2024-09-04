@@ -561,6 +561,8 @@ declare module "cs2/bindings" {
   	unit: Unit;
   	value: number;
   	signed: boolean;
+  	icon?: string;
+  	valueIcon?: string;
   }
   const NUMBER2_PROPERTY = "Game.UI.Common.Number2Property";
   export interface Number2Property {
@@ -568,11 +570,15 @@ declare module "cs2/bindings" {
   	unit: Unit;
   	value: Number2;
   	signed: boolean;
+  	icon?: string;
+  	valueIcon?: string;
   }
   const STRING_PROPERTY = "Game.UI.Common.StringProperty";
   export interface StringProperty {
   	labelId: string;
   	valueId: string;
+  	icon?: string;
+  	valueIcon?: string;
   }
   export type Properties = {
   	[NUMBER_PROPERTY]: NumberProperty;
@@ -2007,7 +2013,8 @@ declare module "cs2/bindings" {
   export interface VehicleCountSection extends SelectedInfoSectionBase {
   	vehicleCount: number;
   	activeVehicles: number;
-  	vehicleCounts: Number2[];
+  	vehicleCountMin: number;
+  	vehicleCountMax: number;
   }
   export interface SelectVehiclesSection extends SelectedInfoSectionBase {
   	primaryVehicle: VehiclePrefab | null;
@@ -2383,6 +2390,7 @@ declare module "cs2/bindings" {
   	name: Name;
   	color: Color;
   	entity: Entity;
+  	active: boolean;
   }
   export type LineItem = LineStop | LineVehicle;
   const LINE_STOP = "Game.UI.InGame.LineVisualizerSection+LineStop";

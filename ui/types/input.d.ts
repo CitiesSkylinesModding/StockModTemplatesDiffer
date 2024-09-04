@@ -423,6 +423,7 @@ declare module "cs2/input" {
   	"Move Vertical": Action1D;
   	"Switch Radio Station": Action1D;
   	"Scroll Vertical": Action1D;
+  	"Scroll Assets": Action1D;
   	"Select": Action;
   	"Purchase Dev Tree Node": Action;
   	"Select Chirp Sender": Action;
