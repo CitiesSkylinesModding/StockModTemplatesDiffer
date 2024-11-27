@@ -42,16 +42,16 @@ declare module "cs2/ui" {
   	anchorElRef?: RefObject<HTMLElement>;
   }
   export export const Tooltip: ({ tooltip, forceVisible, disabled, theme, direction, alignment, className, children, anchorElRef }: PropsWithChildren<TooltipProps>) => JSX.Element;
-  export const FOCUS_DISABLED: unique symbol;
-  export const FOCUS_AUTO: unique symbol;
-  export type FocusKey = typeof FOCUS_DISABLED | typeof FOCUS_AUTO | UniqueFocusKey;
-  export type UniqueFocusKey = FocusSymbol | string | number;
   export class FocusSymbol {
   	readonly debugName: string;
   	readonly r: number;
   	constructor(debugName: string);
   	toString(): string;
   }
+  export const FOCUS_DISABLED: FocusSymbol;
+  export const FOCUS_AUTO: FocusSymbol;
+  export type FocusKey = typeof FOCUS_DISABLED | typeof FOCUS_AUTO | UniqueFocusKey;
+  export type UniqueFocusKey = FocusSymbol | string | number;
   export interface PanelTheme extends PanelTitleBarTheme {
   	panel: string;
   	header: string;
@@ -192,6 +192,7 @@ declare module "cs2/ui" {
   	"Tool Options": Action;
   	"Switch Toolmode": Action;
   	"Toggle Snapping": Action;
+  	"Toggle Contour Lines": Action;
   	"Capture Keyframe": Action;
   	"Reset Property": Action;
   	"Toggle Property": Action;
