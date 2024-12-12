@@ -57,7 +57,7 @@ declare module "cs2/ui" {
   	header: string;
   	content: string;
   	footer: string;
-  	closeHint: string;
+  	floatingHint?: string;
   }
   export interface PanelTitleBarTheme {
   	titleBar: string;
@@ -88,7 +88,7 @@ declare module "cs2/ui" {
   	cancel?: ReactNode;
   	onConfirm: (dismiss: boolean) => void;
   	onCancel?: () => void;
-  	dismissable?: boolean;
+  	dismissible?: boolean;
   	cancellable?: boolean;
   	zIndex?: number;
   }
@@ -160,6 +160,7 @@ declare module "cs2/ui" {
   	"Purchase Dev Tree Node": Action;
   	"Select Chirp Sender": Action;
   	"Save Game": Action;
+  	"Overwrite Save": Action;
   	"Expand Group": Action;
   	"Collapse Group": Action;
   	"Select Route": Action;
@@ -176,11 +177,15 @@ declare module "cs2/ui" {
   	"Photo Mode": Action;
   	"Focus Citizen": Action;
   	"Unfocus Citizen": Action;
+  	"Focus Line Panel": Action;
+  	"Focus Occupants Panel": Action;
+  	"Focus Info Panel": Action;
   	"Close": Action;
   	"Back": Action;
   	"Leave Underground Mode": Action;
   	"Leave Info View": Action;
   	"Leave Map Tile View": Action;
+  	"Jump Section": Action1D;
   	"Switch Tab": Action1D;
   	"Switch Option Section": Action1D;
   	"Switch DLC": Action1D;
@@ -239,6 +244,7 @@ declare module "cs2/ui" {
   	"Toggle Selected Object Emptying": Action;
   	"Toggle Selected Lot Edit": Action;
   	"Toggle Follow Selected Citizen": Action;
+  	"Toggle Traffic Routes": Action;
   	"Pause Menu": Action;
   	"Load Game": Action;
   	"Start Game": Action;
@@ -342,7 +348,9 @@ declare module "cs2/ui" {
   export export const DropdownToggle: ({ theme, openIconComponent, closeIconComponent, children, ...props }: PropsWithChildren<DropdownToggleProps>) => JSX.Element;
   export interface DropdownToggleBaseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   	tooltip?: ReactNode;
+  	showHint?: boolean;
   	theme?: Partial<DropdownToggleTheme>;
+  	buttonTheme?: ButtonProps$1["theme"];
   	sounds?: ButtonSounds | null;
   	selectSound?: UISound | string | null;
   	tooltipLabel?: ReactNode;
@@ -375,6 +383,7 @@ declare module "cs2/ui" {
   	enter?: UISound | string | null;
   	exit?: UISound | string | null;
   }
+  export type LocReactNode = JSX.Element | string;
   export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   	focusKey?: FocusKey;
   	header?: ReactNode;
@@ -385,7 +394,9 @@ declare module "cs2/ui" {
   	contentClassName?: string;
   	onClose?: () => void;
   	allowFocusExit?: boolean;
-  	showCloseHint?: boolean;
+  	hintClassName?: string;
+  	showCloseHint?: boolean | InputAction;
+  	unfocusedHintAction?: InputAction;
   	backActionOverride?: string;
   	allowLooping?: boolean;
   }
@@ -480,7 +491,6 @@ declare module "cs2/ui" {
   export export const Scrollable: (props: ScrollableProps & {
   	children?: import("react").ReactNode;
   } & import("react").RefAttributes<HTMLDivElement>) => import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | null;
-  export type LocReactNode = JSX.Element | string;
   export enum ParagraphStyle {
   	None = 0,
   	Heading1 = 1,

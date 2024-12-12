@@ -765,6 +765,7 @@ declare module "cs2/bindings" {
   	"Purchase Dev Tree Node": Action;
   	"Select Chirp Sender": Action;
   	"Save Game": Action;
+  	"Overwrite Save": Action;
   	"Expand Group": Action;
   	"Collapse Group": Action;
   	"Select Route": Action;
@@ -781,11 +782,15 @@ declare module "cs2/bindings" {
   	"Photo Mode": Action;
   	"Focus Citizen": Action;
   	"Unfocus Citizen": Action;
+  	"Focus Line Panel": Action;
+  	"Focus Occupants Panel": Action;
+  	"Focus Info Panel": Action;
   	"Close": Action;
   	"Back": Action;
   	"Leave Underground Mode": Action;
   	"Leave Info View": Action;
   	"Leave Map Tile View": Action;
+  	"Jump Section": Action1D;
   	"Switch Tab": Action1D;
   	"Switch Option Section": Action1D;
   	"Switch DLC": Action1D;
@@ -844,6 +849,7 @@ declare module "cs2/bindings" {
   	"Toggle Selected Object Emptying": Action;
   	"Toggle Selected Lot Edit": Action;
   	"Toggle Follow Selected Citizen": Action;
+  	"Toggle Traffic Routes": Action;
   	"Pause Menu": Action;
   	"Load Game": Action;
   	"Start Game": Action;
@@ -2133,6 +2139,7 @@ declare module "cs2/bindings" {
   	emptying: boolean;
   	emptiable: boolean;
   	hasLotTool: boolean;
+  	hasTrafficRoutes: boolean;
   }
   export interface DescriptionSection extends SelectedInfoSectionBase {
   	localeId: string;
@@ -2155,11 +2162,12 @@ declare module "cs2/bindings" {
   	ageData: ChartData;
   }
   export interface HouseholdSidebarSection extends SelectedInfoSectionBase {
-  	householdSidebarVariant: HouseholdSidebarVariant;
+  	variant: HouseholdSidebarVariant;
   	residence: HouseholdSidebarItem;
-  	households: HouseholdSidebarItem[];
-  	householdMembers: HouseholdSidebarItem[];
-  	householdPets: HouseholdSidebarItem[];
+  	household: HouseholdSidebarItem;
+  	households: number;
+  	residents: number;
+  	pets: number;
   }
   export interface DistrictsSection extends SelectedInfoSectionBase {
   	districtMissing: boolean;
@@ -2662,9 +2670,9 @@ declare module "cs2/bindings" {
   	entity: Entity;
   	name: Name;
   	familyName: Name;
-  	iconPath: string | null;
+  	icon: string | null;
   	selected: boolean;
-  	memberCount: number | null;
+  	count: number | null;
   }
   export enum HouseholdSidebarVariant {
   	Citizen = "Citizen",
@@ -2763,6 +2771,9 @@ declare module "cs2/bindings" {
   const colorSupported$: ValueBinding<boolean>;
   const color$: ValueBinding<Color>;
   const isEditor$: ValueBinding<boolean>;
+  const replacingTrees$: ValueBinding<boolean>;
+  const distance$: ValueBinding<number>;
+  const distanceScale$: ValueBinding<number>;
   function setColor(color: Color): void;
   function selectTool(toolID: string): void;
   function selectToolMode(modeIndex: number): void;
@@ -2776,6 +2787,7 @@ declare module "cs2/bindings" {
   function toggleParallelMode(): void;
   function setParallelOffset(offset: number): void;
   function setUndergroundMode(enabled: boolean): void;
+  function setDistance(distance: number): void;
   const BULLDOZE_TOOL = "Bulldoze Tool";
   const DEFAULT_TOOL = "Default Tool";
   const ZONE_TOOL = "Zone Tool";
@@ -3224,7 +3236,7 @@ declare module "cs2/bindings" {
   	export { LightingState, SimulationDate, SimulationDateTime, SimulationTime, TimeSettings, calculateDateFromDays, calculateDateFromTicks, calculateDateTimeFromTicks, calculateMinutesSinceMidnightFromTicks, calculateTimeFromMinutesSinceMidnight, dateEquals, day$, lightingState$, setSimulationPaused, setSimulationSpeed, simulationPaused$, simulationPausedBarrier$, simulationSpeed$, ticks$, timeSettings$ };
   }
   export namespace tool {
-  	export { AREA_TOOL, BULLDOZE_TOOL, Brush, DEFAULT_TOOL, NET_TOOL, OBJECT_TOOL, ROUTE_TOOL, SELECTION_TOOL, TERRAIN_TOOL, Tool, ToolMode, UPGRADE_TOOL, ZONE_TOOL, activeTool$, allSnapMask$, allowBrush$, availableSnapMask$, brushAngle$, brushHeight$, brushHeightMax$, brushHeightMin$, brushSize$, brushSizeMax$, brushSizeMin$, brushStrength$, brushes$, bulldozeConfirmationRequested$, changeElevation, color$, colorSupported$, confirmBulldoze, elevation$, elevationDown, elevationDownDisabled$, elevationRange$, elevationScroll, elevationStep$, elevationUp, elevationUpDisabled$, isEditor$, parallelMode$, parallelModeSupported$, parallelOffset$, selectBrush, selectTool, selectToolMode, selectedBrush$, selectedSnapMask$, setBrushAngle, setBrushHeight, setBrushSize, setBrushStrength, setColor, setElevationStep, setParallelOffset, setSelectedSnapMask, setUndergroundMode, snapOptionNames$, toggleParallelMode, undergroundMode$, undergroundModeSupported$ };
+  	export { AREA_TOOL, BULLDOZE_TOOL, Brush, DEFAULT_TOOL, NET_TOOL, OBJECT_TOOL, ROUTE_TOOL, SELECTION_TOOL, TERRAIN_TOOL, Tool, ToolMode, UPGRADE_TOOL, ZONE_TOOL, activeTool$, allSnapMask$, allowBrush$, availableSnapMask$, brushAngle$, brushHeight$, brushHeightMax$, brushHeightMin$, brushSize$, brushSizeMax$, brushSizeMin$, brushStrength$, brushes$, bulldozeConfirmationRequested$, changeElevation, color$, colorSupported$, confirmBulldoze, distance$, distanceScale$, elevation$, elevationDown, elevationDownDisabled$, elevationRange$, elevationScroll, elevationStep$, elevationUp, elevationUpDisabled$, isEditor$, parallelMode$, parallelModeSupported$, parallelOffset$, replacingTrees$, selectBrush, selectTool, selectToolMode, selectedBrush$, selectedSnapMask$, setBrushAngle, setBrushHeight, setBrushSize, setBrushStrength, setColor, setDistance, setElevationStep, setParallelOffset, setSelectedSnapMask, setUndergroundMode, snapOptionNames$, toggleParallelMode, undergroundMode$, undergroundModeSupported$ };
   }
   export namespace toolbar$1 {
   	export { AgeMask, Asset$1 as Asset, AssetCategory, AssetPack, Theme$1 as Theme, ToolbarGroup, ToolbarItem, ToolbarItemType, ageMask$, assetCategories$, assetPacks$, assets$, clearAssetSelection, selectAsset, selectAssetCategory, selectAssetMenu, selectedAsset$, selectedAssetCategory$, selectedAssetMenu$, selectedAssetPacks$, selectedThemes$, setAgeMask, setSelectedAssetPacks, setSelectedThemes, themes$$1 as themes$, toggleToolOptions, toolbarGroups$, vegetationAges$ };
